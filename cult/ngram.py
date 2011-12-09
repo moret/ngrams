@@ -60,16 +60,3 @@ def run_folder(grams_len, files_folder):
     for filename in list_files(files_folder):
         run_through_file(ngrams, filename)
     return ngrams
-
-def main():
-    grams_len = 5
-    ngram_to_print = 3
-    top_ngrams_to_print = 30
-    files_folder = 'shakespeare/'
-
-    ngrams = run_folder(grams_len, files_folder)
-
-    print_most_common(top_ngrams_to_print, ngrams[ngram_to_print - 1])
-
-if __name__ == '__main__':
-    main()
