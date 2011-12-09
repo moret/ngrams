@@ -62,4 +62,14 @@ def clear_db_year(year):
     redis_db.clear_year(year)
 
 def top(gram_size, how_many, year):
+    ngrams = redis_db.range(gram_size, 0, year)
+    ngrams
+
+    grams_total = 0
+    for gram, count in ngrams:
+        grams_total += count
+
+    for gram, count in ngrams[-how_many:]:
+        print '%5d (%.10f%%) %s' % (count, count / grams_total, gram)
+
     return redis_db.range(gram_size, how_many, year)

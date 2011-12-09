@@ -53,7 +53,7 @@ def top(args):
     gram_size = int(args[1])
     how_many = int(args[2])
 
-    print ngram.top(gram_size, how_many, year)
+    ngram.top(gram_size, how_many, year)
 
     clean()
 

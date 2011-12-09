@@ -15,13 +15,13 @@ class RedisDB(object):
 
     def range(self, gram_size, how_many, year):
         conn = redis.Redis()
-        key = '%d:%d_gram' % (year, gram_size + 1)
+        key = '%d:%d_gram' % (year, gram_size)
         return conn.zrange(key, -how_many, -1, withscores=True)
 
     def clear_year(self, year):
         conn = redis.Redis()
         grams_len = 1
-        while conn.delete('%d:%d_gram' % (year, grams_len + 1)):
+        while conn.delete('%d:%d_gram' % (year, grams_len)):
             grams_len += 1
 
 redis_db = RedisDB()
