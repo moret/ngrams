@@ -1,0 +1,26 @@
+cult ngrams
+
+first time:
+    - install virtualenv
+    - install python2.7
+    - setup virtualenv, run it, clone, install requirements:
+        mkdir ngrams_env
+        cd ngrams_env
+        virtualenv --no-site-packages --python=python27 .
+        source bin/activate
+        git clone git@github.com:moret/ngrams.git
+        cd ngrams
+        pip install -r requirements.pip
+
+developing
+    - move to folder, run virtualenv, develop:
+        cd ngrams_env
+        source bin/activate
+        cd ngrams
+
+running
+    - move to folder, run virtualenv, run:
+        cd ngrams_env
+        source bin/activate
+        cd ngrams
+        paver run
