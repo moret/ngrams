@@ -3,6 +3,7 @@ cult ngrams
 first time:
     - install virtualenv
     - install python2.7
+    - install redis
     - setup virtualenv, run it, clone, install requirements:
         mkdir ngrams_env
         cd ngrams_env
@@ -13,14 +14,16 @@ first time:
         pip install -r requirements.pip
 
 developing
-    - move to folder, run virtualenv, develop:
+    - run redis-server, move to folder, run virtualenv, develop:
+        (on another terminal) redis-server
         cd ngrams_env
         source bin/activate
         cd ngrams
 
 running
-    - move to folder, run virtualenv, run:
+    - run redis-server, move to folder, run virtualenv, run:
+        (on another terminal) redis-server
         cd ngrams_env
         source bin/activate
         cd ngrams
-        paver run
+        paver run year folder_name/

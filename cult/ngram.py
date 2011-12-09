@@ -4,6 +4,10 @@ import os
 import string
 from operator import itemgetter
 
+from cult.redis_db import redis_db
+
+grams_len = 5
+
 def increment_ngrams(ngrams, window):
     for i in range(len(window)):
         gram_size = i + 1
@@ -16,14 +20,6 @@ def increment_ngrams(ngrams, window):
 
 def clear_punctuation(s):
     return s.translate(string.maketrans('', ''), string.punctuation)
-
-def print_most_common(how_many, grams):
-    total = sum(grams.values())
-    tops = sorted(grams.items(), key=itemgetter(1),
-            reverse=True)[:how_many - 1]
-
-    for top in tops:
-        print '%5d (%.10f%%) %s' % (top[1], top[1] / total, top[0])
 
 def run_through_words(ngrams, words):
     for i in range(len(words)):
@@ -48,15 +44,22 @@ def list_files(foldername):
         filenames.append(foldername + '/' + filename)
     return filenames
 
-def create_ngrams_list(grams_len):
+def create_ngrams_list():
     ngrams = []
     for i in range(grams_len):
         ngrams.append({})
 
     return ngrams
 
-def run_folder(grams_len, files_folder):
-    ngrams = create_ngrams_list(grams_len)
+def run_folder(files_folder, year):
+    ngrams = create_ngrams_list()
     for filename in list_files(files_folder):
         run_through_file(ngrams, filename)
+    redis_db.persist(ngrams, year)
     return ngrams
+
+def clear_db_year(year):
+    redis_db.clear_year(year)
+
+def top(gram_size, how_many, year):
+    return redis_db.range(gram_size, how_many, year)

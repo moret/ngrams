@@ -5,21 +5,57 @@ sys.path = ['.'] + sys.path
 
 from paver.easy import task
 from paver.easy import sh
+from paver.easy import consume_args
 
-from cult.ngram import run_folder
-from cult.ngram import print_most_common
+import cult.ngram as ngram
 
+@consume_args
 @task
-def run():
+def run(args):
     clean()
 
-    grams_len = 5
-    ngram_to_print = 3
-    top_ngrams_to_print = 30
-    files_folder = 'shakespeare/'
+    if len(args) != 2:
+        print 'too few arguments - use: paver run year folder_name/'
+        exit()
 
-    ngrams = run_folder(grams_len, files_folder)
-    print_most_common(top_ngrams_to_print, ngrams[ngram_to_print - 1])
+    year = int(args[0])
+    files_folder = args[1]
+
+    ngram.run_folder(files_folder, year)
+
+    clean()
+
+@consume_args
+@task
+def clear_db_year(args):
+    clean()
+
+    if len(args) != 1:
+        print 'too few arguments - use: paver clear_db_year year'
+        exit()
+
+    year = int(args[0])
+
+    ngram.clear_db_year(year)
+
+    clean()
+
+@consume_args
+@task
+def top(args):
+    clean()
+
+    if len(args) != 3:
+        print 'too few arguments - use: paver top year gram_size how_many'
+        exit()
+
+    year = int(args[0])
+    gram_size = int(args[1])
+    how_many = int(args[2])
+
+    print ngram.top(gram_size, how_many, year)
+
+    clean()
 
 @task
 def clean():
