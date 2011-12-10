@@ -21,9 +21,11 @@ developing
         cd ngrams
 
 running
-    - run redis-server, move to folder, run virtualenv, run:
+    - run redis-server, move to folder, run virtualenv, run server:
         (on another terminal) redis-server
         cd ngrams_env
         source bin/activate
         cd ngrams
-        paver run year folder_name/
+        AWS_ACCESS_KEY_ID='xxx' AWS_SECRET_ACCESS_KEY='yyy' paver run_worker_server
+        (on another terminal) curl 0.0.0.0:8888/map
+        (on another terminal) curl 0.0.0.0:8888/process

@@ -51,10 +51,9 @@ def create_ngrams_list():
 
     return ngrams
 
-def run_folder(files_folder, year):
+def run_file(filename, year):
     ngrams = create_ngrams_list()
-    for filename in list_files(files_folder):
-        run_through_file(ngrams, filename)
+    run_through_file(ngrams, filename)
     redis_db.persist(ngrams, year)
     return ngrams
 

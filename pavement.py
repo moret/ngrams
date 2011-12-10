@@ -3,25 +3,28 @@ from __future__ import absolute_import
 import sys
 sys.path = ['.'] + sys.path
 
+import os
+
 from paver.easy import task
 from paver.easy import sh
 from paver.easy import consume_args
 
 import cult.ngram as ngram
+from cult.worker_server import worker_server
 
-@consume_args
 @task
-def run(args):
+def run_worker_server():
     clean()
 
-    if len(args) != 2:
-        print 'too few arguments - use: paver run year folder_name/'
+    if 'AWS_ACCESS_KEY_ID' not in os.environ:
+        print 'must have AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY on env'
         exit()
 
-    year = int(args[0])
-    files_folder = args[1]
+    if 'AWS_SECRET_ACCESS_KEY' not in os.environ:
+        print 'must have AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY on env'
+        exit()
 
-    ngram.run_folder(files_folder, year)
+    worker_server()
 
     clean()
 
